@@ -1,0 +1,48 @@
+title: |-
+  Suffolk LIT Lab Form Explorer
+
+plugins:
+  datasette-dashboards:
+    Form explorer stats:
+      title: Form Explorer
+      description: |-
+          A reimagining of the data in the Form explorer (https://suffolklitlab.org/form-explorer/)
+          for your own custom analysis.
+      layout:
+        - [analysis-note, form-count]
+        - [analysis-note, form-source]
+      charts:
+        analysis-note:
+          library: markdown
+          display: |-
+            # Basic statistics
+            > A quick rundown of form statistics
+
+        form-count:
+          title: Total number of forms
+          db: form_explorer
+          query: SELECT count(*) as count FROM [form-explorer]
+          library: metric
+          display:
+            field: count
+            prefix:
+            suffix:
+
+        form-source:
+          title: Number of processed forms by state
+          db: form_explorer
+          query: SELECT jurisdiction, count(*) as count FROM [form-explorer] GROUP BY jurisdiction ORDER BY count DESC
+          library: vega
+          display:
+            mark: 
+              type: bar
+              tooltip: true
+            encoding:
+              x:
+                field: jurisdiction
+                type: nominal
+                axis: 
+                  labelAngle: 0
+              y:
+                field: count
+                type: quantitative                
