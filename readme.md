@@ -13,3 +13,28 @@ live datasette with something like the example here: [Open the Chart in the Vega
 
 The linked example is just a barchart that shows the number of forms in each jurisdiction. You can
 customize the SQL query and the kind of chart by playing with some of the examples.
+
+
+## Prerequisites to running Datasette
+
+Install the prerequisites for Datasette:
+
+```bash
+pip install datasette datasette-dashboards
+```
+
+Datasette is a self-contained Python app. To run, you just type
+`datasette form_explorer.db`.
+
+It will run on port 8001 by default; a link will be displayed on the command
+prompt.
+
+## Deploying to Heroku
+
+In the directory where you clone this repository:
+
+```bash
+datasette publish heroku -n suffolk-form-explorer --install datasette-dashboards --metadata metadata.yml --template-dir templates form_explorer.db
+```
+
+This builds the app and deploys it Heroku.
